@@ -10,14 +10,14 @@ tags:
     - xhgui
 ---
 
-# 前言
+## 前言
 
 本文介绍XHGui（MySQL版）的安装、配置和使用。
 
 XHGui基于XHProf，但是较XHpro更加便捷直观，因为它不需要修改项目代码，而且以图形化方式显示结果。
 
-## 1. 安装XHprof
-### 1.1 获取XHprof源码
+### 1. 安装XHprof
+#### 1.1 获取XHprof源码
 对于本地开发环境来说，进行性能分析xdebug是够用了，但如果是线上环境的话，xdebug消耗较大，配置也不够灵活，因此线上环境建议使用xhprof进行PHP性能追踪及分析。
 
 下载xhprof，我们这里选择的是通过git clone的方式，当然你也可以从 http://pecl.php.net/package/xhprof 这里下载。
@@ -32,7 +32,7 @@ git clone https://github.com/phacility/xhprof.git
 php5.4及以上版本不能在pecl中下载，不支持。需要在github上下载hhttps://github.com/phacility/xhprof.git。
 另外xhprof已经很久没有更新过了，截至目前还不支持php7，php7可以试使用https://github.com/tideways/php-profiler-extension。
 
-### 1.2 安装XHprof
+#### 1.2 安装XHprof
 ```
 cd xhprof/extension
 /usr/local/php5.6/bin/phpize
@@ -48,7 +48,7 @@ stalling shared extensions:     /usr/local/php-5.6.14/lib/php/extensions/no-debu
 ```
 
 
-### 1.3 配置XHprof
+#### 1.3 配置XHprof
 修改配置文件php.ini，在最后增加如下配置
 ```
 [xhprof]
@@ -65,8 +65,8 @@ xhprof.output_dir=/www/xhprof/output
 需要创建output_dir
 mkdir -p /www/xhprof/output
 
-## 2. 安装XHGui
-### 2.1 获取XHGui源码
+### 2. 安装XHGui
+#### 2.1 获取XHGui源码
 使用git工具克隆XHGui（MySQL版）到本地：
 
 
@@ -79,7 +79,7 @@ git clone https://github.com/preinheimer/xhprof.git
 
 假设下载后XHGui源码地址为:/usr/local/nginx/html/xhgui.yourdomain.com。
 
-### 2.2 Nginx配置
+#### 2.2 Nginx配置
 因为XHGui的数据要显示在浏览器上，所以必须配置一个能够访问的地址。
 
 在服务器上新增一个站点，指向XHGui源码下面的xhprof_html目录。
@@ -119,7 +119,7 @@ server {
 ```
 
  
-### 2.3  配置XHProf
+#### 2.3  配置XHProf
 复制文件 xhprof_lib 目录下的 config.sample.php 为config.php。编辑 config.php 文件，进行配置。
 
 配置数据库和URL选项：
@@ -141,7 +141,7 @@ $controlIPs = false; //Disables access controlls completely.
 ```
 
 
-### 2.4 导入数据库
+#### 2.4 导入数据库
 在MySQL中新建一个名为 xhprof 的数据库，用如下的语句创建一个 details 表：
 ```mysql
 CREATE TABLE `details` (
@@ -173,27 +173,28 @@ CREATE TABLE `details` (
 
 要获取最新语句，请参考XHGui源码下 xhprof_lib/utils/xhprof_runs.php 文件大约 109行的内容。
 
-## 3. 被分析网站配置
+### 3. 被分析网站配置
 打开需要分析的网站的Nginx配置文件，加入如下一行：
-
+```
 location ~ .*\.(php|php5)?$ {
     #...
     fastcgi_param PHP_VALUE "auto_prepend_file=/usr/local/nginx/html/xhgui.yourdomain.com/external/header.php";
 }
-
+```
 
 
 如果被分析网站用的是Apache，则这样配置：
-
+```
 <VirtualHost *:80>
     ...
     php_admin_value auto_prepend_file "/usr/local/nginx/html/xhgui.yourdomain.com/external/header.php"
     ...
 </VirtualHost>
+```
 这样header.php文件会在目标脚本执行之前自动解析执行。
 
 简单分析一下代码header.php，关健代码：
-
+```
 // 开始分析
 xhprof_enable();
 
@@ -203,7 +204,7 @@ foo();
 // 停止分析，得到分析数据
 $xhprof_data = xhprof_disable();
 $xhprof_data中记录了程序运行过程中所有的函数调用时间及CPU内存消耗，具体记录哪些指标可以通过xhprof_enable的参数控制，目前支持的参数有：
-
+```
 HPROF_FLAGS_NO_BUILTINS 跳过所有内置（内部）函数。
 XHPROF_FLAGS_CPU 输出的性能数据中添加 CPU 数据。
 XHPROF_FLAGS_MEMORY 输出的性能数据中添加内存数据
@@ -219,7 +220,7 @@ Excl. Wall Time(microsec)：函数运行时间（不包括子函数）
 EWall%：函数运行时间（不包括子函数）
 
 
-## 4. 开始分析
+### 4. 开始分析
 问网站地址，假设要分析的网站是：localhost，则通过GET传入_profile=1变量，也就是访问：
 
 http://xhgui.yourdomain.com?_profile=1
@@ -235,7 +236,7 @@ http://xhgui.yourdomain.com/index
 external/header.php脚本会检查_profile参数，并将参数值写到cookie中setcookie('_profile',$_GET['_profile']);，这样就不用每次请求都带GET参数_profile=1，并且cookie是针对域名的，这样也就同域名下的其他URL请求启用了性能分析,然后对目标URL去掉参数_profile后发起重定向。对于不带GET参数_profile的URL请求，header.php会继续检查是否存在名为_profile的cookie，如果存在且值为布尔真，则设置条件变量启用性能分析，否则不启用。
 若想要对已启用性能分析的域名禁用性能分析，则可以通过对URL请求添加GET参数_profile=0来禁用，因为header.php在检查cookie时发现_profile值为布尔假（0），所以不会启用性能分析。
 
-## 5. 图形化支持
+### 5. 图形化支持
 在报告详情页面，有一个按钮“View Callgraph”，点击可以看到方法的调用关系，以及花费时间最多（红色）的方法，但是需要安装graphviz和libpng（若php版本是5.6的，强烈建议使用：graphviz-2.24.0 + libpng-1.5.19，亲测可行）。
 
 安装方法：
@@ -253,26 +254,15 @@ external/header.php脚本会检查_profile参数，并将参数值写到cookie�
 在查看 Xhprof 或 XHGUI 性能数据时，会遇到以下几个术语，其含义对应如下：
 
 Calls / CallCount：函数被调用的次数
-
 Incl. Wall Time / Wall Time：执行该函数（包括子函数）耗费的时间
-
 Incl. MemUse / Memory Usage：该函数（包括子函数）占用的内存
-
 Incl. PeakMemUse / Peak Memory Usage：函数（包括子函数）占用内存的峰值
-
 Incl. CPU / CPU：执行该函数（包括子函数）花费的CPU时间
-
 Excl. Wall Time / Exclusive Wall Time：函数本身（不包括子函数）耗费的时间
-
 Excl. MemUse / Exclusive Memory Usage：函数本身（不包括子函数）占用的内存
-
 Excl. PeakMemUse / Exclusive Peak Memory Usage：函数本身（不包括子函数）耗费内存的峰值
-
 Exclusive CPU：函数本身（不包括子函数）花费的CPU时间
-
-
 Inclusive简写Incl，表示测量到的数据是函数本身及所有调用的子函数总共耗费占用的资源。
-
 Exclusive简写Excl，则表示不包含调用的子函数耗费占用的资源。
 
 另外，所有测量值都是每个函数调用在次数上的叠加。
@@ -285,15 +275,13 @@ How To Set Up XHProf and XHGui for Profiling PHP Applications on Ubuntu 14.04
 歪麦博客
 
 
-注意事项：
-```
+> 注意事项：
+
 1、如果不安装 Graphviz，点击链接“View Full Callgraph”，会报如下错误：
+failed to execute cmd: " dot -Tpng". stderr: Format: "png" not recognized. Use one of: canon cmap cmapx cmapx_np dot eps fig gv imap imap_np ismap pic plain plain-ext pov ps ps2 svg svgz tk vml vmlz xdot xdot1.2 xdot1.4 '
 
-failed to execute cmd: " dot -Tpng". stderr: `Format: "png" not recognized. Use one of: canon cmap cmapx cmapx_np dot eps fig gv imap imap_np ismap pic plain plain-ext pov ps ps2 svg svgz tk vml vmlz xdot xdot1.2 xdot1.4 '
 2、如果看到有提示：Warning: date(): It is not safe to rely on the system's timezone settings. You are *required* to use t...的错误，那么，试着在：/usr/local/nginx/html/xhgui.yourdomain.com/external/header.php文件处的第二行添加：
-
 date_default_timezone_set('PRC');
-3、如果nginx的站点域名配置完成并重启nginx后， 被测试站点一言不合就给你来个：502 Bad Gateway。那么，还是这个文件：/usr/local/nginx/html/xhgui.yourdomain.com/external/header.php 文件底下（不是最底下）找到这个方法：
 
+3、如果nginx的站点域名配置完成并重启nginx后， 被测试站点一言不合就给你来个：502 Bad Gateway。那么，还是这个文件：/usr/local/nginx/html/xhgui.yourdomain.com/external/header.php 文件底下（不是最底下）找到这个方法：
 call_user_func($_xhprof['ext_name'].'_enable', $flagsCpu , $flagsMemory);更改成：call_user_func($_xhprof['ext_name'].'_enable', XHPROF_FLAGS_NO_BUILTINS | $flagsCpu | $flagsMemory);
-```
