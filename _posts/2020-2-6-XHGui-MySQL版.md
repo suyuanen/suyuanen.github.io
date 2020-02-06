@@ -247,7 +247,7 @@ external/header.php脚本会检查_profile参数，并将参数值写到cookie�
 安装完成后，会生成文件：/usr/bin/dot，编辑config.php文件，确保 $_xhprof['dot_binary'] 的值是这个文件的位置。
 
 然后点击“View Callgraph”，就能看到调用关系图了。如下。
-
+![](https://img-blog.csdn.net/20180104175720168)
 
 
 ## 6. 术语说明
@@ -269,10 +269,10 @@ Exclusive简写Excl，则表示不包含调用的子函数耗费占用的资源�
 
 参考资料：
 
-Xhprof安装与使用
-PHP性能优化工具–xhprof安装
-How To Set Up XHProf and XHGui for Profiling PHP Applications on Ubuntu 14.04
-歪麦博客
+[Xhprof安装与使用](http://blog.xiayf.cn/2015/09/15/xhprof-installation-and-usage/)
+[PHP性能优化工具–xhprof安装](http://www.chenglin.name/php/optimization/439.html)
+[How To Set Up XHProf and XHGui for Profiling PHP Applications on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-xhprof-and-xhgui-for-profiling-php-applications-on-ubuntu-14-04)
+[歪麦博客](https://www.awaimai.com/)
 
 
 > 注意事项：
