@@ -270,10 +270,10 @@ Exclusive简写Excl，则表示不包含调用的子函数耗费占用的资源�
 
 参考资料：
 
->- [Xhprof安装与使用](http://blog.xiayf.cn/2015/09/15/xhprof-installation-and-usage/)
->- [PHP性能优化工具–xhprof安装](http://www.chenglin.name/php/optimization/439.html)
->- [How To Set Up XHProf and XHGui for Profiling PHP Applications on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-xhprof-and-xhgui-for-profiling-php-applications-on-ubuntu-14-04)
->- [歪麦博客](https://www.awaimai.com/)
+> - [Xhprof安装与使用](http://blog.xiayf.cn/2015/09/15/xhprof-installation-and-usage/)
+> - [PHP性能优化工具–xhprof安装](http://www.chenglin.name/php/optimization/439.html)
+> - [How To Set Up XHProf and XHGui for Profiling PHP Applications on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-xhprof-and-xhgui-for-profiling-php-applications-on-ubuntu-14-04)
+> - [歪麦博客](https://www.awaimai.com/)
 
 
 > 注意事项：
