@@ -230,7 +230,7 @@ http://xhgui.yourdomain.com?_profile=1
 http://xhgui.yourdomain.com/index
 就会看到如下的报告结果，点击对应的TIMESTAMP就能看到详细的报告。
 
-
+![](/upload/20180104163301354.png)
 
 默认XHProf UI不会对PHP应用收集分析数据，在请求任意URL时，需添加GET参数_profile=1来启用。
 external/header.php脚本会检查_profile参数，并将参数值写到cookie中setcookie('_profile',$_GET['_profile']);，这样就不用每次请求都带GET参数_profile=1，并且cookie是针对域名的，这样也就同域名下的其他URL请求启用了性能分析,然后对目标URL去掉参数_profile后发起重定向。对于不带GET参数_profile的URL请求，header.php会继续检查是否存在名为_profile的cookie，如果存在且值为布尔真，则设置条件变量启用性能分析，否则不启用。
