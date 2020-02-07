@@ -27,8 +27,8 @@ cd memcache-2.2.6  #进入安装目录
 ```
 
 ### 运行配置
-> 运行php安装目录下的phpize文件，这时候会在extension目录下生成相应的configure文件。
-> 运行配置，如果你的服务器上只是装了一个版本的php则不需要添加--with-php-config 。后面的参数只是为了告诉phpize要建立基于哪个版本的扩展。
+> - 运行php安装目录下的phpize文件，这时候会在extension目录下生成相应的configure文件。
+> - 运行配置，如果你的服务器上只是装了一个版本的php则不需要添加--with-php-config 。后面的参数只是为了告诉phpize要建立基于哪个版本的扩展。
 
 ```shell
 /usr/local/php/bin/phpize   #用phpize生成configure配置文件（替换成自己的phpize目录）
