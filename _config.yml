@@ -1,10 +1,10 @@
 # Site settings
 title: BY Blog
-SEOTitle: endy的博客
+SEOTitle: 东小店 邀请码:a2wr5o
 header-img: img/post-bg-desk.jpg
 email: suyuanen@gmail.com
 description: "Every failure is leading towards success."
-keyword: "endy的博客,东小店,芬香,类似芬香"
+keyword: "endy的博客,东小店,芬香,类似芬香,东小店 邀请码:a2wr5o"
 url: "http://suyuanen.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/suyuanen/" # you code repository
