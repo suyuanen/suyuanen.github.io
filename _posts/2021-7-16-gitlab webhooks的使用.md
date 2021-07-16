@@ -30,7 +30,7 @@ cat ~/.ssh/id_rsa.pub
 ```
 > 把打印出来的公钥,放到gitlab  ssh keys 配置上即可
 ![](/upload/5k6ea7idcihmlz1j8fua5ddervnmdwts1.png)
-![](/upload/5k6ea7idcihmlz1j8fua5ddervnmdwts.png)
+![](/upload/5k6ea7idcihmlz1j8fua5ddervnmdwts2.png)
 
 ### clone代码并切换到dev分支
 
