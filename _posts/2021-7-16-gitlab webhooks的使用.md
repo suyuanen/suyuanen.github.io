@@ -37,6 +37,7 @@ cat ~/.ssh/id_rsa.pub
 ```shell
 cd /www
 git clone git@0.0.0.0.0:xxx/test.git   #克隆下来是默认分支
+cd test
 git fetch origin develop:develop  #获取develop分支
 git checkout develop
 git pull origin develop   # 不提示报错,应该就没问题了
@@ -81,7 +82,7 @@ if (empty($_SERVER['HTTP_X_GITLAB_TOKEN']) || $_SERVER['HTTP_X_GITLAB_TOKEN'] !=
 if ($data['ref'] == 'refs/heads/develop') {
 
 
-    $cmd = "cd $web_path && /usr/bin/git pull origin develop";
+    $cmd = "cd $web_path && /usr/bin/git pull origin develop:develop";
     echo $cmd;
     $a = exec($cmd, $out, $status);
     var_dump($a, $out, $status);
